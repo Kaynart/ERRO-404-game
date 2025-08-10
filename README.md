@@ -9,8 +9,6 @@ Derrote as máquinas, proteja seus aliados e impeça o início do apocalipse tec
 Este é um jogo de ação 2D com elementos de sobrevivência e hack and slash, no estilo arena survival. O jogador enfrenta ondas crescentes de inimigos, usando ataques corpo a corpo e movimentação rápida para sobreviver.
 A progressão acontece de forma gradual, com dificuldade crescente e a necessidade de equilibrar combate, coleta de recursos e gestão de vida.
 
-## 🏗️ Arquitetura
-
 ## 👥 Participantes
 [Brígida Gabrielle (bgso)](https://github.com/brigidagabrielle)
 
@@ -34,11 +32,13 @@ Iago Coutinho      |
 Kaynan Roberth     |
 Maria Clara Pereira|
 
+## 🏗️ Arquitetura
+
 ## 🛠️ Ferramentas, bibliotecas, frameworks
 
 ## 💡 Conceitos utilizados
 
-## ⚠️ Desafios e erros:
+## ⚠️ Desafios e erros
 - Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
 - Qual foi o maior desafio enfrentado durante o projeto? Como vocês lidaram com ele?
 - Quais as lições aprendidas durante o projeto?
