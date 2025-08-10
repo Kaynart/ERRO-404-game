@@ -6,8 +6,8 @@ Agora, robôs armados com algoritmos mortais tomam o campus e ameaçam expandir 
 Derrote as máquinas, proteja seus aliados e impeça o início do apocalipse tecnológico. O futuro da humanidade está a poucos cliques de ser destruído… ou salvo.
 
 ## 🎮 Sobre o jogo
-Este é um jogo de ação 2D com elementos de sobrevivência e hack and slash, no estilo arena survival. O jogador enfrenta ondas crescentes de inimigos em um cenário limitado, usando ataques corpo a corpo direcionais e movimentação rápida para sobreviver.
-A progressão acontece de forma em tempo real, com dificuldade crescente e a necessidade de equilibrar combate, coleta de recursos e gestão de vida.
+Este é um jogo de ação 2D com elementos de sobrevivência e hack and slash, no estilo arena survival. O jogador enfrenta ondas crescentes de inimigos, usando ataques corpo a corpo e movimentação rápida para sobreviver.
+A progressão acontece de forma gradual, com dificuldade crescente e a necessidade de equilibrar combate, coleta de recursos e gestão de vida.
 
 ## 🏗️ Arquitetura
 
