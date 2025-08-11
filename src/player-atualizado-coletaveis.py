@@ -53,10 +53,13 @@ class Coletaveis(pygame.sprite.Sprite):
     def efeito_coletavel(self,jogador):
             if self.tipo == "coração":
                 jogador.curar(1) #cura 1 ponto de vida
+                print(f"CURA REALIZADA. Vida atual: {jogador.vida}") # print genérico pra analisar os atributos e suas modaificações
             elif self.tipo == "café":
-                Weapon.cafeina(0.1)
+                jogador.aumenta_atk_speed(0.1) # aumenta o atk speed do player
+                print(f"ATAQUE VELOZ. Velocidade de ataque atual: {jogador.weapon.atk_speed}") # print genérico pra analisar os atributos e suas modaificações
             elif self.tipo == "espadinha":
                 jogador.aumenta_dano(0.1) #aumenta o dano em 10%
+                print(f"DANO AUMENTADO. Dano atual: {jogador.vida}") # print genérico pra analisar os atributos e suas modaificações
             
     def update(self): #Faz o coletável desaparecer após um tempo
             if pygame.time.get_ticks() - self.tempo_nascimento > self.tempo_de_vida:
@@ -88,7 +91,8 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
     def aumenta_dano(self, porcentagem=0.1):
         self.dano += self.dano * porcentagem
     
-
+    def aumenta_atk_speed(self, porcentagem=0.1):
+        self.weapon.atk_speed += self.weapon.atk_speed * porcentagem
 
 
 
