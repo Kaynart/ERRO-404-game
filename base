@@ -1,0 +1,34 @@
+itens = []
+contador_escudo = 0
+contador_coração = 0
+contador_café = 0
+
+# parte para aplicar no inimigo
+
+tipo = random.choice(["escudo", "coração", "café"]) # tipos de itens
+    
+retangulo_item = pygame.Rect(robo["rect"].x + random.randint(0, 30), robo["rect"].y + 60, 30, 30) # (posição x, posição y, largura, altura)
+itens.append({"tipo": tipo, "rect": retangulo_item}) # lista de itens
+
+# ------------------------------------------------
+
+for item in itens[:]:
+    if player.colliderect(item["rect"]):
+        if item["tipo"] == "escudo": # escudo - "crachá"
+            contador_escudo += 1
+        
+        elif item["tipo"] == "coração": #vida - "coração"
+            contador_coração += 1
+            if vida < vida_max: # se vida não estiver cheia, adiociona 1
+                vida += 1
+            else:
+                vida = vida_max
+        
+        elif item["tipo"] == "café": # power-up - "café"
+            contador_café += 1
+
+        itens.remove(item)
+
+                            # O o.o5 é placeholder
+dano_total = ataque_base * (1 + 0.05 * contador_café) # força do personagem aumenta x% a cada café coletado
+
