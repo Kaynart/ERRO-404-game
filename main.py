@@ -1,10 +1,114 @@
 # jogo principal.py
 import pygame
+import sys
 import random
+import math
 from pygame.math import Vector2
 
-# ----------------- Config -----------------
-WIDTH, HEIGHT = 900, 480
+# inicializacao do jogo
+pygame.init()
+
+# resolucao da tela do menu
+largura_tela = 1280
+altura_tela = 720
+tela = pygame.display.set_mode((largura_tela, altura_tela))
+pygame.display.set_caption("Erro 404: Humanidade Não Encontrada")
+
+# clock de fps do jogo, deixei vazio  para definir quando o jogo iniciar
+clock_fps = pygame.time.Clock()
+
+# carrega todas as imagens, agora coloquei as telas 
+fundo_menu = pygame.image.load("fundo_menu.png").convert_alpha()
+fundo_menu = pygame.transform.smoothscale(fundo_menu, (largura_tela, altura_tela))
+botao_start_imagem = pygame.image.load("botao_start.png").convert_alpha()
+botao_exit_imagem  = pygame.image.load("botao_exit.png").convert_alpha()
+imagem_tela_derrota = pygame.transform.smoothscale(pygame.image.load("tela_derrota.png").convert_alpha(), (largura_tela, altura_tela))
+imagem_tela_vitoria = pygame.transform.smoothscale(pygame.image.load("tela_vitoria.png").convert_alpha(), (largura_tela, altura_tela))
+
+# Retângulos dos botões
+botao_start_retangulo = botao_start_imagem.get_rect(topleft=(900, 20))
+botao_exit_retangulo  = botao_exit_imagem.get_rect(topleft=(975, 170))
+
+# gente tive que adicionar isso no codigo, isso eh uma mascara que funciona por pixel, impedindo que houvesse bugs no botoes como deu anteriormente
+mask_botao_start = pygame.mask.from_surface(botao_start_imagem)
+mask_botao_exit  = pygame.mask.from_surface(botao_exit_imagem)
+
+# essa eh a funcao do ponto de pixel invisivel para evitar o bug
+def ponto_em_pixel_visivel(pos, rect, mask):
+    rx, ry = pos[0] - rect.x, pos[1] - rect.y
+    if 0 <= rx < mask.get_size()[0] and 0 <= ry < mask.get_size()[1]:
+        return mask.get_at((rx, ry))
+    return False
+
+# galera essa eh a funcao do menu, basicamente ta feita, mas quero colocar animacao nos botoes
+# adaptei: mudei como funciona as acoes e coloquei a animacao do botao
+def menu():
+    acao = None
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            acao = "quit"
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
+            # agora o clique so vai se tiver nos botoes, fora dele nao pega 
+            if botao_exit_retangulo.collidepoint(evento.pos) and \
+               ponto_em_pixel_visivel(evento.pos, botao_exit_retangulo, mask_botao_exit):
+                acao = "quit"
+            elif botao_start_retangulo.collidepoint(evento.pos) and \
+                 ponto_em_pixel_visivel(evento.pos, botao_start_retangulo, mask_botao_start):
+                acao = "start"  # sai do menu e vai pro jogo aqui
+
+    tela.blit(fundo_menu, (0, 0))
+
+    # animacao do botao, vi um problema ao passar o exit, ent vou ajeitar ja
+    # atualizacao: ajeitei ta funcionando certin
+    posicao_mouse = pygame.mouse.get_pos()
+    tempo = pygame.time.get_ticks() / 1000.0
+    pulso = 1.0 + 0.03 * math.sin(tempo * 6.0)
+
+    # a animacao checa pixels invisiveis
+    if botao_start_retangulo.collidepoint(posicao_mouse) and \
+       ponto_em_pixel_visivel(posicao_mouse, botao_start_retangulo, mask_botao_start):
+        desenhar_botao_pulsante(tela, botao_start_imagem, botao_start_retangulo, escala_base=1.06 * pulso)
+    else:
+        tela.blit(botao_start_imagem, botao_start_retangulo)
+
+    if botao_exit_retangulo.collidepoint(posicao_mouse) and \
+       ponto_em_pixel_visivel(posicao_mouse, botao_exit_retangulo, mask_botao_exit):
+        desenhar_botao_pulsante(tela, botao_exit_imagem, botao_exit_retangulo, escala_base=1.06 * pulso)
+    else:
+        tela.blit(botao_exit_imagem, botao_exit_retangulo)
+
+    pygame.display.flip()
+    return acao
+# funcao da animacao do botao
+def desenhar_botao_pulsante(surface, imagem, retangulo, escala_base=1.06):
+    w, h = imagem.get_size()
+    imagem_escalada = pygame.transform.smoothscale(imagem, (int(w * escala_base), int(h * escala_base)))
+    r = imagem_escalada.get_rect(center=retangulo.center)
+    surface.blit(imagem_escalada, r.topleft)
+
+# aqui vem a tela de derrota e tela de vitoria apertando esq para voltar para o menu
+def tela_derrota():
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            return "quit"
+        if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+            return "menu"
+    tela.blit(imagem_tela_derrota, (0, 0))
+    pygame.display.flip()
+    return None
+
+def tela_vitoria():
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            return "quit"
+        if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+            return "menu"
+    tela.blit(imagem_tela_vitoria, (0, 0))
+    pygame.display.flip()
+    return None
+
+# jogo a partir daqui
+WIDTH, HEIGHT = 1280, 720
 FPS = 60
 GROUND_Y = HEIGHT - 80
 
@@ -229,6 +333,10 @@ class Game:
         # fonte
         self.font = pygame.font.SysFont(None, 28)
 
+        # mudem aqui a condicao de vitoria
+        self.victory_score = 1500
+        self.result = None  # vai ser tirado provavelmente
+
     def spawn_robot(self):
         side = random.choice(['left','right'])
         r = Robot(side, self.player)
@@ -247,7 +355,9 @@ class Game:
             self.handle_events()
             self.update(dt)
             self.draw()
-        pygame.quit()
+        # aqui gente, inves de sair do jogo diretamente, fiz voltar ao menu sem fechar o jogo
+        # por isso tirei o pygame quit
+        return
 
     def handle_events(self):
         for e in pygame.event.get():
@@ -267,14 +377,11 @@ class Game:
         if self.spawn_timer >= self.spawn_interval:
             self.spawn_robot()
             self.spawn_timer = 0.0
-            # reduce interval gradually (optional)
-            # self.spawn_interval = max(0.7, self.spawn_interval - 0.02)
 
         # atualizar sprites
         self.all_sprites.update(dt)
 
         # colisão espada -> robô
-        # iterar por cada espada e checar colisão manualmente para respeitar hit_enemies set
         for sword in list(self.swords):
             hits = pygame.sprite.spritecollide(sword, self.robots, False)
             for r in hits:
@@ -300,6 +407,14 @@ class Game:
         # check game over
         if self.player.hp <= 0:
             self.running = False
+            # galera aqui eu imprimo a tela de derrota se o player morre (gui)
+            self.result = "derrota"
+
+        # aqui foi so para funcionar a tela de vitoria, precisamos saber se ganhamos, eu coloquei 1500 pontos so para testar rapido kk (gui)
+        # deixo a criterio de voces as condicoes de vitoria, coloquei isso so para testar, pode tirar se quiser (gui)
+        if self.player.score >= self.victory_score and self.running:
+            self.running = False
+            self.result = "vitoria"
 
     def draw(self):
         self.screen.fill(BG)
@@ -307,9 +422,7 @@ class Game:
         pygame.draw.rect(self.screen, (30,20,20), (0, GROUND_Y, WIDTH, HEIGHT-GROUND_Y))
 
         # sprites
-        # desenhar sombras por baixo (opcional)
         for s in self.all_sprites:
-            # sombra simples para personagem e robôs
             shadow_rect = s.rect.copy()
             shadow_rect.y += 6
             shadow = pygame.Surface((shadow_rect.width, 8), pygame.SRCALPHA)
@@ -334,8 +447,55 @@ class Game:
 
         pygame.display.flip()
 
-# ----------------- Run -----------------
+# essa parte controla quando o jogo vai pra tela ou o jogo mesmo, basicamente a cola entro o meu codigo e de kaynan
+def main():
+    estado = "menu"
+    resultado = None 
+    executando = True
+
+    while executando:
+        dt = clock_fps.tick(60) / 1000.0
+
+        if estado == "menu":
+            acao = menu()
+            if acao == "quit":
+                estado = "sair"
+            elif acao == "start":
+                jogo = Game()
+                jogo.run()
+                resultado = jogo.result
+                # ajusta a tela para o menu se algum bug acontecer
+                pygame.display.set_mode((largura_tela, altura_tela))
+                estado = "vitoria" if resultado == "vitoria" else "derrota"
+
+        elif estado == "derrota":
+            acao = tela_derrota()
+            if acao == "quit":
+                estado = "sair"
+            elif acao == "menu":
+                # garante que o menu esteja no tamanho certo
+                pygame.display.set_mode((largura_tela, altura_tela))
+                estado = "menu"
+
+        elif estado == "vitoria":
+            acao = tela_vitoria()
+            if acao == "quit":
+                estado = "sair"
+            elif acao == "menu":
+                pygame.display.set_mode((largura_tela, altura_tela))
+                estado = "menu"
+
+        elif estado == "sair":
+            executando = False
+
+    pygame.quit()
+    sys.exit()
+
+# para dar run no jogo
 if __name__ == "__main__":
+
     game = Game()
     game.run()
     print("Game Over! Pontuação:", game.player.score)
+    main()
+
