@@ -50,7 +50,7 @@ class Coletaveis(pygame.sprite.Sprite):
         self.tempo_nascimento = pygame.time.get_ticks()
         self.tempo_de_vida = 8000 #8 segundos
 
-        def efeito_coletavel(self,jogador):
+    def efeito_coletavel(self,jogador):
             if self.tipo == "coração":
                 jogador.curar(1) #cura 1 ponto de vida
             elif self.tipo == "café":
@@ -58,9 +58,10 @@ class Coletaveis(pygame.sprite.Sprite):
             elif self.tipo == "espadinha":
                 jogador.aumenta_dano(0.1) #aumenta o dano em 10%
             
-        def update(self): #Faz o coletável desaparecer após um tempo
+    def update(self): #Faz o coletável desaparecer após um tempo
             if pygame.time.get_ticks() - self.tempo_nascimento > self.tempo_de_vida:
                 self.kill()
+                
 
 
 
@@ -275,11 +276,11 @@ contador_coletaveis = 0
 opcoes_coletaveis = ["coração", "café", "espadinha"]
 #Função de dropar coletáveis
 def dropar_coletavel():
-    objeto = randint.choice(opcoes_coletaveis) # Escolhe um tipo de coletável aleatoriamente
-    coletavel = Coletaveis(objeto = objeto (400, 300))
+    objeto = random.choice(opcoes_coletaveis) # Escolhe um tipo de coletável aleatoriamente
+    coletavel = Coletaveis(tipo = objeto) # Cria o coletável com o tipo escolhido
     grupo_coletaveis.add(coletavel)
     todas_as_sprites.add(coletavel) 
-
+ultimo_drop = 0
 
 
 # Declarando os possíveis inimigos pros ataques da espada
@@ -331,6 +332,7 @@ while True: #Faz o jogo rodar em loop
                 #reset coletáveis
                 grupo_coletaveis.empty()
                 contador_coletaveis = 0
+                ultimo_drop = 0
 
                 # Reseta vida do jogador
                 jogador.vida = 5
@@ -371,10 +373,13 @@ while True: #Faz o jogo rodar em loop
 
         #Funcionamento dos coletáveis
         momento_de_dropar = c_robo % 3
-        if momento_de_dropar == 0 and c_robo > 0:
+        drop = c_robo // 3
+        if momento_de_dropar == 0 and c_robo > 0 and drop > ultimo_drop:
             for item in grupo_coletaveis.sprites():
                 item.kill()
             dropar_coletavel()
+            ultimo_drop = drop
+            
         #Definir momento de coleta
         coletados = pygame.sprite.spritecollide(jogador, grupo_coletaveis, dokill=True)
         for item in coletados:
