@@ -13,10 +13,11 @@ import pygame
 
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, owner, damage=1):
+    def __init__(self, owner, atk_speed=1, damage=1):
         super().__init__()
         self.owner = owner
         self.damage = damage
+        self.atk_speed = atk_speed
         self.attacking = False  # pra testar, deixei True
         self.sprites = []
 
@@ -35,7 +36,7 @@ class Weapon(pygame.sprite.Sprite):
     def update(self):
         # ANIMAÇÃO ENQUANTO ATACA
         if self.attacking:
-            self.atual = self.atual + 1
+            self.atual += self.atk_speed
             if self.atual >= len(self.sprites):
                 self.atual = 0
                 self.attacking = False
@@ -43,7 +44,7 @@ class Weapon(pygame.sprite.Sprite):
                 for alvo in self.owner.target_group:
                     alvo.dano_sofrido = False # reseta a variável de dano sofrido de cada robô alcançado, pra que possam sofrer novo ataque
 
-            img = self.sprites[self.atual]
+            img = self.sprites[int(self.atual)]
         else:
             img = self.sprites[0]  # sprite "neutra"
 
