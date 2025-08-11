@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+=======
+>>>>>>> a815c1e02ee5b76f6ae9ef5d1547addc14df510b
 #Importando
 import pygame
 from sys import exit
@@ -36,7 +40,7 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
         self.dano = 1 
         self.gravidade = 0
 
-        self.weapon = Weapon(self, 0.5)
+        self.weapon = Weapon(self)
 
         #A hitbox - equivalente ao alcance da arma do jogador
         self.hitbox = pygame.Rect(self.rect.x+5, self.rect.y, 20, 50) #Hitbox um pouco menor que o jogador
@@ -50,10 +54,26 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.velocidade # movimento em si
             self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
+    
+    
+    #Quando é coletado um coração vermelho, aumenta um coração
+    def coracao_vermelho(self):
+        if self.vida < 5:
+            self.vida += 1
+    
+    #Quando um coração azul é coletado, chega a vida máxima
+    def coracao_azul(self):
+        self.vida = 5
+    
+    #Quando um café é coletado, dano almenta
+    def cafe(self):
+        self.dano += (self.dano)*0.1
+
+
 
 #Definindo a classe inimiga
 class Robo_assassino(pygame.sprite.Sprite):
-    def __init__(self,velocidade_robo,direcao, alvo):
+    def __init__(self,velocidade_robo,direcao):
         super().__init__()
         # Declaração de imagnes base do robô
         self.imagebase = pygame.image.load(fr'asset\images\enemy\Robo1.png').convert_alpha()
@@ -79,7 +99,6 @@ class Robo_assassino(pygame.sprite.Sprite):
             self.robo_x = 800
         self.robo_y = 340
         self.rect = self.image.get_rect(midbottom = ((self.robo_x,self.robo_y)))
-        self.lado = 1
 
         #Características com aplicação no jogo
         self.vida_robo = 3
@@ -92,12 +111,10 @@ class Robo_assassino(pygame.sprite.Sprite):
         self.primeiro_contato = False
 
         # Para o funcionamento base com a espada
-        self.alvo = alvo
         self.dano_sofrido = False
         self.empurrando = False
         self.knockback = 0 # quantidade de knockback sofrido
         self.knockback_dir = 0 # direção em que é empurrado
-        self.flip_definido_no_empurrao = False # para o empurrão
 
 
     #Definindo função para caso haja ataque do robô
@@ -117,16 +134,19 @@ class Robo_assassino(pygame.sprite.Sprite):
         self.vida_robo -= quantidade # vida do robô perde o dano recebido
         print(f"Dummy levou {quantidade} de dano! Vida restante: {self.vida_robo}") # print geral de dano recebido
         self.dano_sofrido = True # variável pra evitar dano contínuo em um mesmo ataque
+<<<<<<< HEAD
 
+=======
+        cont_robos_mortos.append(0)
+        
+>>>>>>> a815c1e02ee5b76f6ae9ef5d1547addc14df510b
         # Checagem se morreu
         if self.vida_robo <= 0:
             print("Dummy Derrotado")
             self.kill()
-            cont_robos_mortos.append(0)
+    
 
-    def empurrar(self, forca = 80):
-        # mudança da direção do empurrão caso necessário
-        self.lado = -1 if self.move_direita else 1
+    def empurrar(self, direcao = 1, forca = 80):
         # Empurrar
         if self.empurrando == False:
             self.velocidade_robo = 0
@@ -134,7 +154,7 @@ class Robo_assassino(pygame.sprite.Sprite):
             self.empurrando = True
 
         if self.knockback > 1: # se ainda não tiver na posição nova depois do empurrão, continua sofrendo
-            self.rect.x += self.knockback * 0.03 * self.lado # recebe o empurrão
+            self.rect.x += self.knockback * 0.03 # recebe o empurrão
             self.knockback = int(self.knockback - (self.knockback * 0.03)) # diminui o próximo knockback
             
         else: # se já foi empurrado bastante
@@ -154,17 +174,9 @@ class Robo_assassino(pygame.sprite.Sprite):
 
         # TEMPO DA ANIMAÇÃO DE DANO
         if self.tempoanimacao < 20:
-            if self.move_direita: # se o alvo estiver do lado esquerdo
-                self.image = self.imagedano1  #  imagem do robo Vermelho
-            else:
-                self.image = pygame.transform.flip(self.imagedano1, True, False)
-
+            self.image = self.imagedano1  #  imagem do robo Vermelho
         elif self.tempoanimacao < 30:
-            if self.move_direita: # se o alvo estiver do lado esquerdo
-                self.image = self.imagedano2
-            else:
-                self.image = pygame.transform.flip(self.imagedano2, True, False)  # imagem do robo Branco
-
+            self.image = self.imagedano2  # imagem do robo Branco
         else:
             self.image = self.imagebase  # Volta ao normal
             self.animando_dano = False
@@ -203,7 +215,7 @@ def spawn_robo(grupo_robos_assassinos, todas_as_sprites):
     if num%2 == 0: direcao = 'esquerda'
     else: direcao = 'direita'
     velocidade = 2
-    robo_inimigo = Robo_assassino(velocidade,direcao,jogador)
+    robo_inimigo = Robo_assassino(velocidade,direcao)
     grupo_robos_assassinos.add(robo_inimigo)
     todas_as_sprites.add(robo_inimigo)
 
@@ -267,7 +279,7 @@ while True: #Faz o jogo rodar em loop
                 espada.owner.target_group = grupo_robos_assassinos
 
                 # Reseta vida do jogador
-                jogador.vida = 5
+                jogador.vida = 100
 
     if game_active:
         screen.fill('Beige')
