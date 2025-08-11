@@ -18,12 +18,12 @@ pygame.display.set_caption("Erro 404: Humanidade Não Encontrada")
 clock_fps = pygame.time.Clock()
 
 # carrega todas as imagens, agora coloquei as telas 
-fundo_menu = pygame.image.load("fundo_menu.png").convert_alpha()
+fundo_menu = pygame.image.load(r"Assets\Interfaces\fundo_menu.png").convert_alpha()
 fundo_menu = pygame.transform.smoothscale(fundo_menu, (largura_tela, altura_tela))
-botao_start_imagem = pygame.image.load("botao_start.png").convert_alpha()
-botao_exit_imagem  = pygame.image.load("botao_exit.png").convert_alpha()
-imagem_tela_derrota = pygame.transform.smoothscale(pygame.image.load("tela_derrota.png").convert_alpha(), (largura_tela, altura_tela))
-imagem_tela_vitoria = pygame.transform.smoothscale(pygame.image.load("tela_vitoria.png").convert_alpha(), (largura_tela, altura_tela))
+botao_start_imagem = pygame.image.load(r"Assets\Interfaces\botao_start.png").convert_alpha()
+botao_exit_imagem  = pygame.image.load(r"Assets\Interfaces\botao_exit.png").convert_alpha()
+imagem_tela_derrota = pygame.transform.smoothscale(pygame.image.load(r"Assets\Interfaces\tela_derrota.png").convert_alpha(), (largura_tela, altura_tela))
+imagem_tela_vitoria = pygame.transform.smoothscale(pygame.image.load(r"Assets\Interfaces\tela_vitoria.png").convert_alpha(), (largura_tela, altura_tela))
 
 # Retângulos dos botões
 botao_start_retangulo = botao_start_imagem.get_rect(topleft=(900, 20))
@@ -50,10 +50,10 @@ def menu():
         if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
             # agora o clique so vai se tiver nos botoes, fora dele nao pega 
             if botao_exit_retangulo.collidepoint(evento.pos) and \
-               ponto_em_pixel_visivel(evento.pos, botao_exit_retangulo, mask_botao_exit):
+                ponto_em_pixel_visivel(evento.pos, botao_exit_retangulo, mask_botao_exit):
                 acao = "quit"
             elif botao_start_retangulo.collidepoint(evento.pos) and \
-                 ponto_em_pixel_visivel(evento.pos, botao_start_retangulo, mask_botao_start):
+                ponto_em_pixel_visivel(evento.pos, botao_start_retangulo, mask_botao_start):
                 acao = "start"  # sai do menu e vai pro jogo aqui
 
     tela.blit(fundo_menu, (0, 0))
