@@ -25,12 +25,12 @@ A progressão acontece de forma gradual, com dificuldade crescente e a necessida
 ## 📋 Divisão de tarefas
 Alunos | Contribuições                    
 -------------------|----------------------------------------
-Felipe Almeida     |                    
-Brigida Gabrielle  |          
-Guilherme Galindo  |      
-Iago Coutinho      | 
-Kaynan Roberth     |
-Maria Clara Pereira|
+Felipe Almeida     | Coletáveis, README, design de robôs                    
+Brigida Gabrielle  | Movimentação personagem         
+Guilherme Galindo  | Telas de menu, vitória e derrota     
+Iago Coutinho      | Coletáveis
+Kaynan Roberth     | Arma, design de mapa, design de arma, design de mapa
+Maria Clara Pereira| Robôs
 
 ## 🏗️ Arquitetura
 
