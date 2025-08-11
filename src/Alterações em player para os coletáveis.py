@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> a815c1e02ee5b76f6ae9ef5d1547addc14df510b
 #Importando
 import pygame
 from sys import exit
@@ -131,7 +134,12 @@ class Robo_assassino(pygame.sprite.Sprite):
         self.vida_robo -= quantidade # vida do robô perde o dano recebido
         print(f"Dummy levou {quantidade} de dano! Vida restante: {self.vida_robo}") # print geral de dano recebido
         self.dano_sofrido = True # variável pra evitar dano contínuo em um mesmo ataque
+<<<<<<< HEAD
 
+=======
+        cont_robos_mortos.append(0)
+        
+>>>>>>> a815c1e02ee5b76f6ae9ef5d1547addc14df510b
         # Checagem se morreu
         if self.vida_robo <= 0:
             print("Dummy Derrotado")
