@@ -130,7 +130,8 @@ class Robo_assassino(pygame.sprite.Sprite):
         self.vida_robo -= quantidade # vida do robô perde o dano recebido
         print(f"Dummy levou {quantidade} de dano! Vida restante: {self.vida_robo}") # print geral de dano recebido
         self.dano_sofrido = True # variável pra evitar dano contínuo em um mesmo ataque
-
+        cont_robos_mortos.append(0)
+        
         # Checagem se morreu
         if self.vida_robo <= 0:
             print("Dummy Derrotado")
