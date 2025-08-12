@@ -78,7 +78,7 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
         self.image = pygame.Surface((40, 60))
         self.image.fill((0, 255, 0))
         self.rect = self.image.get_rect(midbottom=(400, 320))
-        self.vida = 5
+        self.vida = 10
         self.velocidade = 5
         self.dano = 1 
         self.gravidade = 0
@@ -89,7 +89,7 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
         self.hitbox = pygame.Rect(self.rect.x+5, self.rect.y, 20, 50) #Hitbox um pouco menor que o jogador
 
     def curar (self, qtd=1):
-        if self.vida < 5:
+        if self.vida < 10:
             self.vida += qtd
     
     def aumenta_dano(self, porcentagem=0.1):
@@ -283,7 +283,7 @@ grupo_coletaveis = pygame.sprite.Group()
 contador_coletaveis = 0
 opcoes_coletaveis = ["coração", "café", "espadinha"]
 
-vidas_max = 5
+vidas_max = 10
 vidas_atuais = jogador.vida
 
 #imagem do coração pra barra de vida
@@ -365,7 +365,7 @@ while True: #Faz o jogo rodar em loop
                 ultimo_drop = 0
 
                 # Reseta vida do jogador
-                jogador.vida = 5
+                jogador.vida = 10
 
                 # contadores de coletavies
                 contador_cafe = 0
@@ -381,14 +381,14 @@ while True: #Faz o jogo rodar em loop
         screen.blit(cont_surface,cont_rect)
 
         # Desenhar a imagem do café
-        screen.blit(imagem_cafe, (10, 50))  
+        screen.blit(imagem_cafe, (710, 50))  
         texto_cafe = texto_font.render(str(contador_cafe), True, 'Black')
-        screen.blit(texto_cafe, (55, 55))  
+        screen.blit(texto_cafe, (755, 55))  
 
         # Desenhar a imagem da espadinha
-        screen.blit(imagem_espadinha, (10, 90))
+        screen.blit(imagem_espadinha, (710, 90))
         texto_espadinha = texto_font.render(str(contador_powerup), True,'Black')
-        screen.blit(texto_espadinha, (55, 95))
+        screen.blit(texto_espadinha, (755, 95))
 
         #O jogo acontece aqui            
         # Desenhando as sprites básicas da arma e personagem principal
@@ -447,7 +447,7 @@ while True: #Faz o jogo rodar em loop
         screen.blit(rest_surface,rest_rect)
 
     #Desenhar a barra de vida do jogador
-    desenhar_barra_vidas(screen, jogador.vida, 5)
+    desenhar_barra_vidas(screen, jogador.vida, 10)
 
     # Funcionamento base
     pygame.display.flip()
