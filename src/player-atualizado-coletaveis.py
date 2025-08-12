@@ -288,7 +288,7 @@ vidas_atuais = jogador.vida
 
 #imagem do coração pra barra de vida
 imagem_coração = pygame.image.load(fr'asset\images\coletaveis\coração_vermelho.png').convert_alpha()
-imagem_coração = pygame.transform.scale(imagem_coração, (40, 40))
+imagem_coração = pygame.transform.scale(imagem_coração, (30, 30))
 #imagem do café pro contador
 imagem_cafe = pygame.image.load(fr'asset\images\coletaveis\café.png').convert_alpha()
 imagem_cafe = pygame.transform.scale(imagem_cafe, (40, 40)) 
@@ -307,7 +307,7 @@ ultimo_drop = 0
 #função para desenhar a barra de vida do jogador
 def desenhar_barra_vidas(tela, vidas_atuais, vidas_max):
     for i in range(vidas_max):
-        x = 10 + (i * 35)
+        x = 10 + (i * 27)
         y = 10
         if i < vidas_atuais:
             tela.blit(imagem_coração, (x, y))
