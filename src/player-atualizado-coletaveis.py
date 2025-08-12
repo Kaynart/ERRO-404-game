@@ -14,6 +14,10 @@ pygame.display.set_caption('Mise') #Define o nome do jogo
 clock = pygame.time.Clock() #sozinho não faz nada
 texto_font = pygame.font.Font(None, 50) #(nome, tamanho)
 
+#contadores de coletáveis zerados
+contador_cafe = 0
+contador_powerup = 0  
+
 game_active = True #Condicional de andamento do jogo
 start_time = 0
 
@@ -35,16 +39,16 @@ class Coletaveis(pygame.sprite.Sprite):
         self.tipo = tipo
 
         if self.tipo == "coração":
-            self.image = pygame.Surface((20, 20), pygame.SRCALPHA)
-            self.image.fill((255, 0, 0)) #Depois botar a imagem de coração no lugar
+            self.image = pygame.image.load(r'asset\images\coletaveis\coração_vermelho.png').convert_alpha()
+            self.image = pygame.transform.scale(self.image, (50,50))
         
         elif self.tipo == "café":
-            self.image = pygame.Surface((20, 20), pygame.SRCALPHA)
-            self.image.fill((139, 69, 19)) #cor marro, depois botar a imagem de café no lugar
+            self.image = pygame.image.load(r'asset\images\coletaveis\café.png').convert_alpha()     
+            self.image = pygame.transform.scale(self.image, (50,50))   
         
         elif self.tipo == "espadinha":
-            self.image = pygame.Surface((20, 20), pygame.SRCALPHA)
-            self.image.fill((128, 128, 128)) #cor cinza, depois botar a imagem de espada no lugar
+            self.image = pygame.image.load(fr'asset\images\coletaveis\powerup_sabre.png').convert_alpha()
+            self.image  = pygame.transform.scale(self.image, (70,70))
 
         self.rect = self.image.get_rect(midbottom=(400, 300))
         self.tempo_nascimento = pygame.time.get_ticks()
@@ -278,6 +282,20 @@ todas_as_sprites.add(espada)
 grupo_coletaveis = pygame.sprite.Group()
 contador_coletaveis = 0
 opcoes_coletaveis = ["coração", "café", "espadinha"]
+
+vidas_max = 5
+vidas_atuais = jogador.vida
+
+#imagem do coração pra barra de vida
+imagem_coração = pygame.image.load(fr'asset\images\coletaveis\coração_vermelho.png').convert_alpha()
+imagem_coração = pygame.transform.scale(imagem_coração, (40, 40))
+#imagem do café pro contador
+imagem_cafe = pygame.image.load(fr'asset\images\coletaveis\café.png').convert_alpha()
+imagem_cafe = pygame.transform.scale(imagem_cafe, (40, 40)) 
+#imagem dos sabres pro contador
+imagem_espadinha = pygame.image.load(fr'asset\images\coletaveis\powerup_sabre.png').convert_alpha()
+imagem_espadinha = pygame.transform.scale(imagem_espadinha, (40, 40))
+
 #Função de dropar coletáveis
 def dropar_coletavel():
     objeto = random.choice(opcoes_coletaveis) # Escolhe um tipo de coletável aleatoriamente
@@ -286,6 +304,13 @@ def dropar_coletavel():
     todas_as_sprites.add(coletavel) 
 ultimo_drop = 0
 
+#função para desenhar a barra de vida do jogador
+def desenhar_barra_vidas(tela, vidas_atuais, vidas_max):
+    for i in range(vidas_max):
+        x = 10 + (i * 35)
+        y = 10
+        if i < vidas_atuais:
+            tela.blit(imagem_coração, (x, y))
 
 # Declarando os possíveis inimigos pros ataques da espada
 espada.owner.target_group = grupo_robos_assassinos
@@ -293,6 +318,7 @@ espada.owner.target_group = grupo_robos_assassinos
 #Timer
 timer_spawn_robo = pygame.USEREVENT + 1
 pygame.time.set_timer(timer_spawn_robo, 1500) #(Evento , repetição) #Um robô surge a cada 1,5s -> tempo alterável depois
+
 
 while True: #Faz o jogo rodar em loop
 
@@ -341,6 +367,11 @@ while True: #Faz o jogo rodar em loop
                 # Reseta vida do jogador
                 jogador.vida = 5
 
+                # contadores de coletavies
+                contador_cafe = 0
+                contador_powerup = 0
+
+
     if game_active:
         screen.fill('Beige')
         ver_tempo(start_time)
@@ -348,6 +379,16 @@ while True: #Faz o jogo rodar em loop
         cont_surface = texto_font.render(f'{c_robo}',False,'Black')
         cont_rect = cont_surface.get_rect(center = (300,50))
         screen.blit(cont_surface,cont_rect)
+
+        # Desenhar a imagem do café
+        screen.blit(imagem_cafe, (10, 50))  
+        texto_cafe = texto_font.render(str(contador_cafe), True, 'Black')
+        screen.blit(texto_cafe, (55, 55))  
+
+        # Desenhar a imagem da espadinha
+        screen.blit(imagem_espadinha, (10, 90))
+        texto_espadinha = texto_font.render(str(contador_powerup), True,'Black')
+        screen.blit(texto_espadinha, (55, 95))
 
         #O jogo acontece aqui            
         # Desenhando as sprites básicas da arma e personagem principal
@@ -389,9 +430,14 @@ while True: #Faz o jogo rodar em loop
         for item in coletados:
             item.efeito_coletavel(jogador)
 
+            # atualização dos contadores
+            if item.tipo == "café":
+                contador_cafe += 1
+            elif item.tipo == "espadinha":
+                contador_powerup += 1
 
-        if jogador.vida <= 0:
-            game_active = False
+                if jogador.vida <= 0:
+                    game_active = False
 
     else: #Tela de restart
         rest_surface = texto_font.render('PRESS SPACE TO CONTINUE', False, 'Black') #(terobo_xto, AA, cor)
@@ -399,6 +445,9 @@ while True: #Faz o jogo rodar em loop
 
         screen.fill('Beige')
         screen.blit(rest_surface,rest_rect)
+
+    #Desenhar a barra de vida do jogador
+    desenhar_barra_vidas(screen, jogador.vida, 5)
 
     # Funcionamento base
     pygame.display.flip()
