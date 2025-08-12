@@ -114,7 +114,7 @@ def spawn_robo(grupo_robos_assassinos):
 grupo_robos_assassinos = pygame.sprite.Group()
 cont_robos_mortos = [0]
 
- #Timer
+#Timer
 timer_spawn_robo = pygame.USEREVENT + 1
 pygame.time.set_timer(timer_spawn_robo, 1500) #(Evento , repetição) #Um robô surge a cada 1,5s -> tempo alterável depois
 

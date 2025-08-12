@@ -9,11 +9,15 @@ pygame.init()
 
 #Definições gerais da tela (vai ser substituído)
 screen = pygame.display.set_mode((800,400)) #Define a tela e eu tamanho (largura, altura)
-screen.fill('Beige')
+background_image = pygame.image.load(r"asset\images\background\backimage.jpg").convert()  # IMAGEM DE FUNDO PROVISÕRIA
+background_image = pygame.transform.scale(background_image, (800,500)) # IMAGEM DE FUNDO PROVISÕRIA
+screen.blit(background_image,(0,-100))  # IMAGEM DE FUNDO PROVISÕRIA
+#screen.fill('Beige') # cor base sem a imagme fundo
+
 pygame.display.set_caption('Mise') #Define o nome do jogo
 clock = pygame.time.Clock() #sozinho não faz nada
 texto_font = pygame.font.Font(None, 50) #(nome, tamanho)
-
+texto_pixel = pygame.font.Font(r"asset\font\Pixeltype.ttf", 40)
 #contadores de coletáveis zerados
 contador_cafe = 0
 contador_powerup = 0  
@@ -24,8 +28,10 @@ start_time = 0
 #Função para calcular o tempo atual
 def ver_tempo(start_time):
     tempo_atual = (pygame.time.get_ticks() - start_time)//1000 #Dá o tempo atual em segudos
-    tempo_surface = texto_font.render(f'{tempo_atual}',False,'Black')
-    tempo_rect = tempo_surface.get_rect(center = (400,50))
+    minutos = int(tempo_atual // 60) # pega apenas os minutos, já que divide a contagem de segundos pro 60
+    segundos = int(tempo_atual % 60) # pega o resto da divisão por 60, que sobra os segundos
+    tempo_surface = texto_font.render(f"{minutos:02}:{segundos:02}",False,'Black')
+    tempo_rect = tempo_surface.get_rect(topleft = (690,10))
     screen.blit(tempo_surface,tempo_rect)
 
 
@@ -63,7 +69,7 @@ class Coletaveis(pygame.sprite.Sprite):
                 print(f"ATAQUE VELOZ. Velocidade de ataque atual: {jogador.weapon.atk_speed}") # print genérico pra analisar os atributos e suas modaificações
             elif self.tipo == "espadinha":
                 jogador.aumenta_dano(0.1) #aumenta o dano em 10%
-                print(f"DANO AUMENTADO. Dano atual: {jogador.vida}") # print genérico pra analisar os atributos e suas modaificações
+                print(f"DANO AUMENTADO. Dano atual: {jogador.weapon.damage}") # print genérico pra analisar os atributos e suas modaificações
             
     def update(self): #Faz o coletável desaparecer após um tempo
             if pygame.time.get_ticks() - self.tempo_nascimento > self.tempo_de_vida:
@@ -93,7 +99,7 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
             self.vida += qtd
     
     def aumenta_dano(self, porcentagem=0.1):
-        self.dano += self.dano * porcentagem
+        self.weapon.damage += self.weapon.damage * porcentagem
     
     def aumenta_atk_speed(self, porcentagem=0.1):
         self.weapon.atk_speed += self.weapon.atk_speed * porcentagem
@@ -171,7 +177,8 @@ class Robo_assassino(pygame.sprite.Sprite):
             self.primeiro_contato = False
 
     #Essa função só acontece se houver ataque do jogador
-    def levar_dano(self, quantidade):
+    def levar_dano(self, jogador):
+        quantidade = jogador.weapon.damage
         # Desconto de pontos de vida pelo dano
         self.vida_robo -= quantidade # vida do robô perde o dano recebido
         print(f"Dummy levou {quantidade} de dano! Vida restante: {self.vida_robo}") # print geral de dano recebido
@@ -286,6 +293,7 @@ opcoes_coletaveis = ["coração", "café", "espadinha"]
 vidas_max = 10
 vidas_atuais = jogador.vida
 
+# CONTADORES COLETÁVEIS
 #imagem do coração pra barra de vida
 imagem_coração = pygame.image.load(fr'asset\images\coletaveis\coração_vermelho.png').convert_alpha()
 imagem_coração = pygame.transform.scale(imagem_coração, (30, 30))
@@ -295,6 +303,14 @@ imagem_cafe = pygame.transform.scale(imagem_cafe, (40, 40))
 #imagem dos sabres pro contador
 imagem_espadinha = pygame.image.load(fr'asset\images\coletaveis\powerup_sabre.png').convert_alpha()
 imagem_espadinha = pygame.transform.scale(imagem_espadinha, (40, 40))
+
+# ATRIBUTOS
+# imagem do ícone de atk speed
+imagem_atkspeed = pygame.image.load(r"asset\images\atributos\imagem_atkspeed.png").convert_alpha()
+imagem_atkspeed = pygame.transform.scale(imagem_atkspeed, (40, 40))
+# imagem do ícone de dano atual
+imagem_dano = pygame.image.load(r"asset\images\atributos\imagem_dano.png").convert_alpha()
+imagem_dano = pygame.transform.scale(imagem_dano, (40, 40))
 
 #Função de dropar coletáveis
 def dropar_coletavel():
@@ -373,22 +389,33 @@ while True: #Faz o jogo rodar em loop
 
 
     if game_active:
-        screen.fill('Beige')
+        #screen.fill('Beige')
+        screen.blit(background_image, (0,-100))  # IMAGEM DE FUNDO PROVISÕRIA
         ver_tempo(start_time)
         c_robo = len(cont_robos_mortos)-1
         cont_surface = texto_font.render(f'{c_robo}',False,'Black')
         cont_rect = cont_surface.get_rect(center = (300,50))
-        screen.blit(cont_surface,cont_rect)
+        # screen.blit(cont_surface,cont_rect) # retirada da contagem de robôs mortos
 
         # desenhar a imagem do contador café
         screen.blit(imagem_cafe, (710, 50))  
-        texto_cafe = texto_font.render(str(contador_cafe), True, 'Black')
-        screen.blit(texto_cafe, (755, 55))  
+        texto_cafe = texto_pixel.render(str(contador_cafe), True, 'Yellow')
+        screen.blit(texto_cafe, (755, 60))  
 
         # desenhar a imagem do contador de espadinha
         screen.blit(imagem_espadinha, (710, 90))
-        texto_espadinha = texto_font.render(str(contador_powerup), True,'Black')
-        screen.blit(texto_espadinha, (755, 95))
+        texto_espadinha = texto_pixel.render(str(contador_powerup), True,'Yellow')
+        screen.blit(texto_espadinha, (755, 100))
+
+        # desenhar a imagem do indicador do atributo ataque speed
+        screen.blit(imagem_atkspeed, (10, 50))
+        texto_atkspeed = texto_pixel.render(f"{jogador.weapon.atk_speed:.2f}", True,'White')
+        screen.blit(texto_atkspeed, (55, 60))
+
+        # desenhar a imagem do indicador do atributo dano atual
+        screen.blit(imagem_dano, (10, 90))  
+        texto_danoatual = texto_pixel.render(f"{jogador.weapon.damage:.2f}", True,'White')
+        screen.blit(texto_danoatual, (55, 105))
 
         #O jogo acontece aqui            
         # Desenhando as sprites básicas da arma e personagem principal
@@ -440,7 +467,7 @@ while True: #Faz o jogo rodar em loop
                     game_active = False
 
     else: #Tela de restart
-        rest_surface = texto_font.render('PRESS SPACE TO CONTINUE', False, 'Black') #(terobo_xto, AA, cor)
+        rest_surface = texto_pixel.render('PRESS SPACE TO CONTINUE', False, 'Black') #(terobo_xto, AA, cor)
         rest_rect = rest_surface.get_rect(center = (400,200))
 
         screen.fill('Beige')
@@ -450,5 +477,5 @@ while True: #Faz o jogo rodar em loop
     desenhar_barra_vidas(screen, jogador.vida, 10)
 
     # Funcionamento base
-    pygame.display.flip()
+    pygame.display.update()
     clock.tick(60) #O jogo roda a 60fps, altera a velocidade_robo do loop
