@@ -380,12 +380,12 @@ while True: #Faz o jogo rodar em loop
         cont_rect = cont_surface.get_rect(center = (300,50))
         screen.blit(cont_surface,cont_rect)
 
-        # Desenhar a imagem do café
+        # desenhar a imagem do contador café
         screen.blit(imagem_cafe, (710, 50))  
         texto_cafe = texto_font.render(str(contador_cafe), True, 'Black')
         screen.blit(texto_cafe, (755, 55))  
 
-        # Desenhar a imagem da espadinha
+        # desenhar a imagem do contador de espadinha
         screen.blit(imagem_espadinha, (710, 90))
         texto_espadinha = texto_font.render(str(contador_powerup), True,'Black')
         screen.blit(texto_espadinha, (755, 95))
