@@ -78,21 +78,17 @@ class Coletaveis(pygame.sprite.Sprite):
 
 
 
-class Jogador(pygame.sprite.Sprite): 
+class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
     def __init__(self):
         super().__init__()
-        # self.image = pygame.Surface((40, 60))
-        # self.image.fill((0, 255, 0))
+        self.image_original = pygame.image.load(
+            r'asset\images\player\player-removebg-preview.png'
+        ).convert_alpha()
 
-        # carrega a imagem
-        self.image = pygame.image.load(r'asset\images\player\player-removebg-preview.png').convert_alpha()
+        self.image_original = pygame.transform.scale(self.image_original, (90, 130))
+        self.image = self.image_original
 
-        # redimensiona 
-        self.image = pygame.transform.scale(self.image, (90, 130))
-
-        # define a posição
         self.rect = self.image.get_rect(midbottom=(400, 320))
-
         self.vida = 10
         self.velocidade = 5
         self.dano = 1 
@@ -100,16 +96,8 @@ class Jogador(pygame.sprite.Sprite):
 
         self.weapon = Weapon(self, 0.5)
         self.hitbox = pygame.Rect(self.rect.x + 5, self.rect.y, 20, 50)
-        self.rect = self.image.get_rect(midbottom=(400, 320))
-        self.vida = 10
-        self.velocidade = 5
-        self.dano = 1 
-        self.gravidade = 0
-
-        self.weapon = Weapon(self, 0.5)
-
-        #A hitbox - equivalente ao alcance da arma do jogador
-        self.hitbox = pygame.Rect(self.rect.x+5, self.rect.y, 20, 50) #Hitbox um pouco menor que o jogador
+       
+        self.facing_right = True  # Direção inicial
 
     def curar (self, qtd=1):
         if self.vida < 10:
@@ -122,16 +110,21 @@ class Jogador(pygame.sprite.Sprite):
         self.weapon.atk_speed += self.weapon.atk_speed * porcentagem
 
 
-
-    #Movimentação Kaynan
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.velocidade # movimento em si
+            self.facing_right = False
             self.weapon.flip_horizontal = True # ativa a condição de inversão da arma
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.velocidade # movimento em si
+            self.facing_right = True
             self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
+
+        if self.facing_right:
+            self.image = self.image_original
+        else:
+            self.image = pygame.transform.flip(self.image_original, True, False)
 
 #Definindo a classe inimiga
 class Robo_assassino(pygame.sprite.Sprite):
