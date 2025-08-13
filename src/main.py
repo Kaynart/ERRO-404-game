@@ -101,10 +101,10 @@ def menu():
         if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
             # agora o clique so vai se tiver nos botoes, fora dele nao pega 
             if botao_exit_retangulo.collidepoint(evento.pos) and \
-               ponto_em_pixel_visivel(evento.pos, botao_exit_retangulo, mask_botao_exit):
+                ponto_em_pixel_visivel(evento.pos, botao_exit_retangulo, mask_botao_exit):
                 acao = "quit"
             elif botao_start_retangulo.collidepoint(evento.pos) and \
-                 ponto_em_pixel_visivel(evento.pos, botao_start_retangulo, mask_botao_start):
+                ponto_em_pixel_visivel(evento.pos, botao_start_retangulo, mask_botao_start):
                 acao = "start"  # sai do menu e vai pro jogo aqui
 
     tela.blit(fundo_menu, (0, 0))
@@ -117,13 +117,13 @@ def menu():
 
     # a animacao checa pixels invisiveis
     if botao_start_retangulo.collidepoint(posicao_mouse) and \
-       ponto_em_pixel_visivel(posicao_mouse, botao_start_retangulo, mask_botao_start):
+        ponto_em_pixel_visivel(posicao_mouse, botao_start_retangulo, mask_botao_start):
         desenhar_botao_pulsante(tela, botao_start_imagem, botao_start_retangulo, escala_base=1.06 * pulso)
     else:
         tela.blit(botao_start_imagem, botao_start_retangulo)
 
     if botao_exit_retangulo.collidepoint(posicao_mouse) and \
-       ponto_em_pixel_visivel(posicao_mouse, botao_exit_retangulo, mask_botao_exit):
+        ponto_em_pixel_visivel(posicao_mouse, botao_exit_retangulo, mask_botao_exit):
         desenhar_botao_pulsante(tela, botao_exit_imagem, botao_exit_retangulo, escala_base=1.06 * pulso)
     else:
         tela.blit(botao_exit_imagem, botao_exit_retangulo)
@@ -225,6 +225,7 @@ def main():
                 pygame.display.set_mode((largura_tela, altura_tela))
                 estado = "menu"
             elif acao == "restart": 
+                som_derrota = True
                 jogo = Jogo()
                 jogo.run()
                 resultado = jogo.result
@@ -240,6 +241,7 @@ def main():
                 pygame.display.set_mode((largura_tela, altura_tela))
                 estado = "menu"
             elif acao == "restart": 
+                som_vitoria = True # reseta o som de vitória
                 jogo = Jogo()
                 jogo.run()
                 resultado = jogo.result
