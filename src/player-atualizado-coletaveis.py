@@ -78,7 +78,7 @@ class Coletaveis(pygame.sprite.Sprite):
 
 
 
-class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
+class Jogador(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image_original = pygame.image.load(
