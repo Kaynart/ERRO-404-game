@@ -72,12 +72,12 @@ Baixe o branch main do repositório, extraia o arquivo zip, abra a pasta em seu 
 
 <img src="\asset\images\coletaveis\café.png" alt="Café" width="30"> Aumenta a velocidade de ataque
 
-<img src="\asset\images\coletaveis\powerup_sabre.png" alt="Espadinha" width="30"> Aumenta força de atauqe
+<img src="\asset\images\coletaveis\powerup_sabre.png" alt="Espadinha" width="30"> Aumenta força de ataque
 
 ## ⚠️ Desafios e erros
 - Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
 
-O maior erro foi a falta de experiência prévia com POO e Pygame, o que gerou problemas de formatação, sintaxe e estrutura do código nos primeiros dias. Lidamos com isso dedicando tempo extra para estudar os conceitos básicos e revisando cuidadosamente cada trecho de código antes de integrá-lo ao projeto.
+O maior erro foi demorarmos a iniciar a programação e começarmos cada um a desenvolver sua parte sem definir claramente as funções de cada membro, o que gerou confusão.. Lidamos com esse problema nos reunindo e definindo exatamente as funções de cada um, aproveitando todas as oportunidades para avançar no projeto
 
 - Qual foi o maior desafio enfrentado durante o projeto? Como vocês lidaram com ele?
 
