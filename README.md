@@ -37,6 +37,40 @@ A progressão acontece de forma gradual, com dificuldade crescente e a necessida
 | Maria Clara Pereira | Robôs, apresentação, efeitos sonoros             |
 
 ## 🏗️ Arquitetura
+O código segue a organização própria de POO (Programação Orientada a Objetos) e foi separado em três pastas principais:
+Weapon:
+- Contém a classe da arma/espada: imagem e retângulos da espada, características (velocidade da animação e dano), animação, som e efeito nos inimigos atingidos (empurrão e perda de vida).
+
+Player_atualizado_coletaveis (contém a classe Jogo):
+- Início: importa as bibliotecas já mencionadas, contém o código das telas (início, derrota e vitória), efeitos sonoros, representação visual dos coletáveis e efeitos sonoros;
+- Função auxiliar (ver_tempo): registra e exibe visualmente o tempo decorrido de jogo;
+- Classe Coletaveis: 
+  - Possui imagens, retângulos e dimensões próprias para os três coletáveis (coração, upgrade de arma e café), sabendo que ele é substituído quando não coletado ou desaparece;
+  - Função de efeitos no jogador e na arma, como cura, aumento de velocidade ou de dano.
+- Classe Jogador:
+  - Possui imagem e retângulo próprios, sendo o dono da arma (cuja classe foi importada);
+  - Há funções menores que aplicam os efeitos dos coletáveis;
+  - Função de movimentação (esquerda, direita e pulo), dentro dos limites da tela;
+  - Efeito visual de dano recebido por personagem.
+- Classe Robo_assassino:
+  - Possui imagens padrão e de efeito de dano, características de vida, dano, tempo de cooldown, velocidade e indicativos que correspondem à animação de dano;
+  - Função de ataque do robô: quando há colisão com o jogador e o tempo de cooldown é obedecido;
+  - Funções do robô levando dano: com efeito de morte (que acrescenta um ao contador de robôs mortos) ou de empurrão pela espada;
+  - Função de movimento do robô: que persegue o jogador com base no comparativo da posição x.
+- Função de spawn dos robôs de direção aleatória;
+- Imagem de coletáveis como representação visual e contador, bem como a função de drop deles e de registro de vidas (corações) do jogador;
+- Loop de funcionamento do jogo: 
+  - Com identificação de eventos (tempo de spawn dos robôs, fechamento do jogo, movimentação e ataque);
+  - Definição de derrota e de vitória;
+  - Jogo funcionamento com atualização dos objetos em tela.
+
+Main (código final):
+- Início: importação de bibliotecas e demais classes;
+- Tela:
+- Código de tela inicial com “botões” interativos, com suas próprias funções internas, possibilitando entrar, reiniciar e sair do jogo;
+- Músicas de derrota e de vitória;
+- Função menu:
+  - Possui a execução do jogo (pela importação do arquivo “Player_atualizado_coletaveis” e telas correspondentes ao resultado (“vitória” ou “derrota”).
 
 ## 🛠️ Ferramentas
 
