@@ -115,12 +115,11 @@ class Jogador(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.velocidade # movimento em si
             self.facing_right = False
-            self.weapon.flip_horizontal = True # ativa a condição de inversão da arma
+            self.weapon.flip_horizontal = True 
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.velocidade # movimento em si
             self.facing_right = True
-            self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
-
+            self.weapon.flip_horizontal = False 
         if self.facing_right:
             self.image = self.image_original
         else:
