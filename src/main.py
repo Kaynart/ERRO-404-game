@@ -47,6 +47,10 @@ botao_exit_retangulo  = botao_exit_imagem.get_rect(topleft=(975, 170))
 mask_botao_start = pygame.mask.from_surface(botao_start_imagem)
 mask_botao_exit  = pygame.mask.from_surface(botao_exit_imagem)
 
+# boolenas de controle do som
+som_derrota = False
+som_vitoria = False
+
 # essa eh a funcao do ponto de pixel invisivel para evitar o bug
 def ponto_em_pixel_visivel(pos, rect, mask):
     rx, ry = pos[0] - rect.x, pos[1] - rect.y
@@ -135,8 +139,9 @@ def desenhar_botao_pulsante(surface, imagem, retangulo, escala_base=1.06):
     surface.blit(imagem_escalada, r.topleft)
 
 # aqui vem a tela de derrota e tela de vitoria apertando esq para voltar para o menu
-def tela_derrota():
-    musica_derrota.play()
+def tela_derrota(som_derrota):
+    if som_derrota:
+        musica_derrota.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             return "quit"
@@ -159,8 +164,9 @@ def tela_derrota():
     pygame.display.flip()
     return None
 
-def tela_vitoria():
-    musica_vitoria.play()
+def tela_vitoria(som_vitoria):
+    if som_vitoria:
+        musica_vitoria.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             return "quit"
@@ -204,8 +210,13 @@ def main():
                 pygame.display.set_mode((largura_tela, altura_tela))
                 estado = "vitoria" if resultado == "vitoria" else "derrota"
 
+                # booleanas para ajuste do som
+                if estado == 'derrota': som_derrota = True
+                else: som_vitoria = True
+
         elif estado == "derrota":
-            acao = tela_derrota()
+            acao = tela_derrota(som_derrota)
+            som_derrota = False
             if acao == "quit":
                 estado = "sair"
             elif acao == "menu":
@@ -219,7 +230,8 @@ def main():
                 estado = "vitoria" if resultado == "vitoria" else "derrota"
 
         elif estado == "vitoria":
-            acao = tela_vitoria()
+            acao = tela_vitoria(som_vitoria)
+            som_vitoria = False
             if acao == "quit":
                 estado = "sair"
             elif acao == "menu":

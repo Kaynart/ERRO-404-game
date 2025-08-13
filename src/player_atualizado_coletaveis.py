@@ -24,7 +24,7 @@ class Jogo:
         efeito_tela_dano = pygame.image.load(r"asset\images\background\tela_dano.png").convert_alpha()
         efeito_tela_dano.set_alpha(50) # muda a opacidade
 
-        pygame.display.set_caption('Mise') #Define o nome do jogo
+        pygame.display.set_caption('Erro 404: Humanidade Não Encontrada') #Define o nome do jogo
         clock = pygame.time.Clock() #sozinho não faz nada
         texto_font = pygame.font.Font(None, 50) #(nome, tamanho)
         texto_pixel = pygame.font.Font(r"asset\font\Pixeltype.ttf", 40)
@@ -50,8 +50,7 @@ class Jogo:
         # MÚSICA PRINCIPAL
         pygame.mixer.music.load(r"asset\sounds\musica_fundo.mp3") # carregando ela
         pygame.mixer.music.set_volume(0.3) # volume para ela
-        pygame.mixer.music.play(-1) # faz ela tocar infinitamente
-
+        musica_fundo = False
 
         game_active = True #Condicional de andamento do jogo
         start_time = 0
@@ -88,7 +87,7 @@ class Jogo:
                     self.image = pygame.image.load(fr'asset\images\coletaveis\powerup_sabre.png').convert_alpha()
                     self.image  = pygame.transform.scale(self.image, (70,70))
 
-                self.rect = self.image.get_rect(midbottom=(640, 600))
+                self.rect = self.image.get_rect(midbottom=(640, 500))
                 self.tempo_nascimento = pygame.time.get_ticks()
                 self.tempo_de_vida = 8000 #8 segundos
 
@@ -165,6 +164,8 @@ class Jogo:
                     self.rect.x += self.velocidade # movimento em si
                     self.facing_right = True
                     self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
+                if self.rect.right > 1280: self.rect.right = 1280
+                elif self.rect.left < 0: self.rect.left = 0 
 
                 # flip do personagem
                 if self.facing_right:
@@ -215,7 +216,7 @@ class Jogo:
                 self.velocidadebase_robo = velocidade_robo # velocidade originak
                 self.velocidade_robo = velocidade_robo # velocidade atual
                 self.dano_robo = 1
-                self.tempo_cooldown_robo = 300 #milissegundos
+                self.tempo_cooldown_robo = 1200 #milissegundos
 
                 self.ultimo_ataque_robo = 0
                 self.primeiro_contato = False
@@ -239,7 +240,7 @@ class Jogo:
                     self.ultimo_ataque_robo = agora
                     self.primeiro_contato = True
                 
-                if self.primeiro_contato and not self.rect.colliderect(jogador.rect):
+                if self.primeiro_contato and (agora - self.ultimo_ataque_robo) >= self.tempo_cooldown_robo:
                     self.primeiro_contato = False
 
             #Essa função só acontece se houver ataque do jogador
@@ -308,7 +309,7 @@ class Jogo:
                     self.rect.x -= self.velocidade_robo
                     self.move_direita = False
 
-                elif self.rect.x <= jogador.rect.x: 
+                elif self.rect.x < jogador.rect.x: 
                     self.rect.x += self.velocidade_robo
                     self.image = pygame.transform.flip(self.image, True, False)
                     self.move_direita = True
@@ -399,7 +400,7 @@ class Jogo:
 
         #Timer
         timer_spawn_robo = pygame.USEREVENT + 1
-        pygame.time.set_timer(timer_spawn_robo, 1500) #(Evento , repetição) #Um robô surge a cada 1,5s -> tempo alterável depois
+        pygame.time.set_timer(timer_spawn_robo, 2000) #(Evento , repetição) #Um robô surge a cada s -> tempo alterável depois
 
 
         while True: #Faz o jogo rodar em loop
@@ -422,6 +423,7 @@ class Jogo:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
                             espada.attacking = True
+                            som_arma = True
 
                 if not game_active: #Reiniciando
                     # tela de derrota
@@ -458,6 +460,10 @@ class Jogo:
 
 
             if game_active:
+                if not musica_fundo: 
+                    pygame.mixer.music.play(-1) # faz ela tocar
+                    musica_fundo = True 
+                    
                 #screen.fill('Beige')
                 screen.blit(background_image, (0,0))  # IMAGEM DE FUNDO PROVISÕRIA
                 ver_tempo(start_time)
@@ -505,18 +511,6 @@ class Jogo:
                     jogador.gravidade = 0
                 jogador.update()
 
-                #Funcionamento dos robôs
-                for robo in grupo_robos_assassinos.sprites():
-                    robo.update(jogador)
-                    if robo.move_direita:
-                        robo.image = robo.imageD
-                    else:
-                        robo.image = robo.imageE
-                    
-                    robo.checando_ataque_robo(jogador)
-                    # robo.checando_ataque_jogador(jogador, cont_robos_mortos, grupo_robos_assassinos)
-                    if robo.move_direita: robo.image = robo.imageD
-                    else: robo.image = robo.imageE
 
                 #Funcionamento dos coletáveis
                 momento_de_dropar = c_robo % 3
@@ -538,11 +532,27 @@ class Jogo:
                     elif item.tipo == "espadinha":
                         contador_powerup += 1
 
+                #Funcionamento dos robôs
+                for robo in grupo_robos_assassinos.sprites():
+                    robo.update(jogador)
+                    if robo.move_direita:
+                        robo.image = robo.imageD
+                    else:
+                        robo.image = robo.imageE
+                    
+                    robo.checando_ataque_robo(jogador)
+                    # robo.checando_ataque_jogador(jogador, cont_robos_mortos, grupo_robos_assassinos)
+                    if robo.move_direita: robo.image = robo.imageD
+                    else: robo.image = robo.imageE
+
                 # derrota na hora
                 if jogador.vida <= 0:
                     game_active = False
                     self.result = "derrota"
+                    pygame.mixer.music.stop() # para a música
+                    musica_fundo = False
                     return
+                
 
             #Desenhar a barra de vida do jogador
             desenhar_barra_vidas(screen, jogador.vida, 10)

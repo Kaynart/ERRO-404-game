@@ -7,6 +7,7 @@ som_dano_robo.set_volume(0.05)
 som_espada = pygame.mixer.Sound(r"asset\sounds\som_espada.mp3")
 som_espada.set_volume(0.2)
 
+
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, owner, atk_speed=1, damage=1):
         super().__init__()
@@ -15,6 +16,7 @@ class Weapon(pygame.sprite.Sprite):
         self.atk_speed = atk_speed
         self.attacking = False  # pra testar, deixei True
         self.sprites = []
+        self.som_arma = False # ajustar o som
 
         for i in range(0, 9):
             self.sprites.append(pygame.image.load(fr"asset\images\weapon\sabre{i}.png").convert_alpha())
@@ -63,7 +65,9 @@ class Weapon(pygame.sprite.Sprite):
 
         # APLICAÇÃO DOS EFEITOS DA ESPADADA
         if self.attacking:
-            som_espada.play()
+            if not self.som_arma: # booleana para ajustar som
+                som_espada.play()
+                self.som_arma = True
             for alvo in self.owner.target_group:
                 if self.rect.colliderect(alvo.rect) and not alvo.dano_sofrido: # se houver colisão e o robõ ainda não tiver sofrido nenhum dano desse ataque
                     som_dano_robo.play()
@@ -73,4 +77,4 @@ class Weapon(pygame.sprite.Sprite):
                     alvo.iniciar_animacao_dano() # ativa a animação de tomar dano
                 if alvo.empurrando:
                     alvo.empurrar()
-
+        else: self.som_arma = False
