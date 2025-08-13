@@ -50,7 +50,7 @@ class Weapon(pygame.sprite.Sprite):
         self.image = img # pega a imagem oficialmente
 
         if self.flip_horizontal:
-            self.rect.midtop = (self.owner.rect.left - 30, self.owner.rect.centery - self.image.get_height() // 2 - 10)
+            self.rect.midtop = (self.owner.rect.left - 15, self.owner.rect.centery - self.image.get_height() // 2 - 10)
         else:
             self.rect.midtop = (self.owner.rect.right + 5, self.owner.rect.centery - self.image.get_height() // 2 - 10)
 

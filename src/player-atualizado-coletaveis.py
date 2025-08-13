@@ -101,11 +101,18 @@ class Coletaveis(pygame.sprite.Sprite):
 
 
 class Jogador(pygame.sprite.Sprite):
+class Jogador(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image_original = pygame.image.load(
             r'asset\images\player\player-removebg-preview.png'
         ).convert_alpha()
+        self.image_original = pygame.image.load(
+            r'asset\images\player\player-removebg-preview.png'
+        ).convert_alpha()
+
+        self.image_original = pygame.transform.scale(self.image_original, (90, 130))
+        self.image = self.image_original
 
         self.image_original = pygame.transform.scale(self.image_original, (90, 130))
         self.image = self.image_original
