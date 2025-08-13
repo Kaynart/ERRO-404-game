@@ -10,12 +10,12 @@ pygame.mixer.init()
 
 #Definições gerais da tela (vai ser substituído)
 screen = pygame.display.set_mode((800,400)) #Define a tela e eu tamanho (largura, altura)
-background_image = pygame.image.load(r"asset\images\background\backimage.jpg").convert()  # IMAGEM DE FUNDO PROVISÕRIA
-background_image = pygame.transform.scale(background_image, (800,500)) # IMAGEM DE FUNDO PROVISÕRIA
-screen.blit(background_image,(0,-100))  # IMAGEM DE FUNDO PROVISÕRIA
+background_image = pygame.image.load(r"asset\images\background\backimage.jpg").convert()  
+background_image = pygame.transform.scale(background_image, (800,500))
+screen.blit(background_image,(0,-100))  
 #screen.fill('Beige') # cor base sem a imagme fundo
 
-pygame.display.set_caption('Mise') #Define o nome do jogo
+pygame.display.set_caption('ERRO 404') #Define o nome do jogo
 clock = pygame.time.Clock() #sozinho não faz nada
 texto_font = pygame.font.Font(None, 50) #(nome, tamanho)
 texto_pixel = pygame.font.Font(r"asset\font\Pixeltype.ttf", 40)
@@ -49,7 +49,7 @@ def ver_tempo(start_time):
     tempo_atual = (pygame.time.get_ticks() - start_time)//1000 #Dá o tempo atual em segudos
     minutos = int(tempo_atual // 60) # pega apenas os minutos, já que divide a contagem de segundos pro 60
     segundos = int(tempo_atual % 60) # pega o resto da divisão por 60, que sobra os segundos
-    tempo_surface = texto_font.render(f"{minutos:02}:{segundos:02}",False,'Black')
+    tempo_surface = texto_font.render(f"{minutos:02}:{segundos:02}",False,'White')
     tempo_rect = tempo_surface.get_rect(topleft = (690,10))
     screen.blit(tempo_surface,tempo_rect)
 
@@ -148,6 +148,9 @@ class Jogador(pygame.sprite.Sprite):
             self.rect.x += self.velocidade # movimento em si
             self.facing_right = True
             self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
+
+        if self.rect.left < 0: self.rect.left = 0
+        elif self.rect.right > 800: self.rect.right = 800
 
         if self.facing_right:
             self.image = self.image_original
@@ -413,13 +416,19 @@ while True: #Faz o jogo rodar em loop
                 # Atualiza a referência do grupo de alvos da espada
                 espada.owner.target_group = grupo_robos_assassinos
 
-                #reset coletáveis
+                # Reseta coletáveis
                 grupo_coletaveis.empty()
                 contador_coletaveis = 0
                 ultimo_drop = 0
 
                 # Reseta vida do jogador
                 jogador.vida = 10
+                
+                # Reseta dano
+                jogador.weapon.damage = 1
+
+                # Reseta ataque/velocidade
+                jogador.weapon.atk_speed = 0.5
 
                 # contadores de coletavies
                 contador_cafe = 0
