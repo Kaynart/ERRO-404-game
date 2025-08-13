@@ -82,7 +82,8 @@ Main (código final):
 ## 📚 Bibliotecas
 
 - Pygame – Biblioteca Python voltada para o desenvolvimento de jogos 2D, oferecendo recursos para gráficos, áudio e controle de eventos.
-- Random – Biblioteca padrão do Python usada para gerar números aleatórios e realizar seleções randômicas.
+- Random – Biblioteca padrão do Python usada para gerar números aleatórios e realizar seleções randômicas, utilizada para criar a aleatoriedade do coletável.
+- Math - Biblioteca padrão do Python que fornece funções matemáticas avançadas, utilizada para criar animações de pulsação nos botões do jogo.
 
 ## 💡 Conceitos utilizados
 
