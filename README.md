@@ -34,9 +34,24 @@ Maria Clara Pereira| Robôs
 
 ## 🏗️ Arquitetura
 
-## 🛠️ Ferramentas, bibliotecas, frameworks
+
+## 🛠️ Ferramentas
+- VSCode – Editor de código leve e poderoso, ideal para programação com suporte a múltiplas linguagens e extensões.
+- Piskel – Ferramenta online para criar e editar pixel art de forma simples e intuitiva.
+- ChatGPT – Assistente de IA utilizada para gerar designs do jogo.
+- GitHub – Plataforma para hospedagem e controle de versão de código com colaboração em equipe.
+
+## 📚 Bibliotecas
+- Pygame – Biblioteca Python voltada para o desenvolvimento de jogos 2D, oferecendo recursos para gráficos, áudio e controle de eventos.
+- Random – Biblioteca padrão do Python usada para gerar números aleatórios e realizar seleções randômicas.
 
 ## 💡 Conceitos utilizados
+- Condicionais – Aplicadas em várias partes do código para tomar decisões, como verificar colisões, vida do jogador, direção do robô, momento de dropar coletáveis, pulo e reinício do jogo.
+- Laços – O jogo roda em loop contínuo e há laços for para percorrer listas e grupos de sprites, como no processamento de robôs e coletáveis.
+- Lista – Usada para armazenar dados como quantidade de robôs derrotados e itens coletados, facilitando contagem e escolha aleatória de elementos.
+- Funções – Criadas para modularizar ações específicas, como, exibir o tempo, criar inimigos, gerar itens e mostrar a vida.
+- Tuplas – Utilizadas em coordenadas e tamanhos fixos, garantindo dados imutáveis para posições e dimensões.
+- POO (Programação Orientada a Objetos) – Aplicada na criação de classes como Coletaveis, Jogador e Robô, encapsulando atributos e métodos relacionados, além do uso de herança.
 
 ## ⚠️ Desafios e erros
 - Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
