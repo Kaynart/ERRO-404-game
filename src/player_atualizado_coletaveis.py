@@ -471,6 +471,8 @@ class Jogo:
                 # vitoria aos 60 segundos
                 if (pygame.time.get_ticks() - start_time) >= 60000:
                     self.result = "vitoria"
+                    pygame.mixer.music.stop() # para a música
+                    musica_fundo = False
                     return
 
                 c_robo = len(cont_robos_mortos)-1
