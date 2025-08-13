@@ -43,16 +43,16 @@ class Weapon(pygame.sprite.Sprite):
         # transformação básica da imagem da arma
         img = pygame.transform.scale(img, (70, 70)) # escala
         if self.flip_horizontal:
-            img = pygame.transform.rotate(img, -20) # rotaciona ao contrário
+            img = pygame.transform.rotate(img, -10) # rotaciona ao contrário
         else:
-            img = pygame.transform.rotate(img, 20) # rotaciona normal
+            img = pygame.transform.rotate(img, 10) # rotaciona normal
 
         self.image = img # pega a imagem oficialmente
 
         if self.flip_horizontal:
-            self.rect.midtop = (self.owner.rect.left - 30, self.owner.rect.centery - self.image.get_height() // 2)
+            self.rect.midtop = (self.owner.rect.left - 30, self.owner.rect.centery - self.image.get_height() // 2 - 10)
         else:
-            self.rect.midtop = (self.owner.rect.right + 14, self.owner.rect.centery - self.image.get_height() // 2)
+            self.rect.midtop = (self.owner.rect.right + 5, self.owner.rect.centery - self.image.get_height() // 2 - 10)
 
         # APLICAÇÃO DOS EFEITOS DA ESPADADA
         if self.attacking:

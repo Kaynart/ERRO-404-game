@@ -6,6 +6,7 @@ from random import randint
 from weapon import Weapon
 
 pygame.init()
+pygame.mixer.init()
 
 #Definições gerais da tela (vai ser substituído)
 screen = pygame.display.set_mode((800,400)) #Define a tela e eu tamanho (largura, altura)
@@ -21,6 +22,24 @@ texto_pixel = pygame.font.Font(r"asset\font\Pixeltype.ttf", 40)
 #contadores de coletáveis zerados
 contador_cafe = 0
 contador_powerup = 0  
+
+# Carregando músicas e efeitos sonoros
+# EFEITOS SONOROS
+musica_derrota = pygame.mixer.music.load(r"asset\sounds\musica_derrota.mp3")
+musica_vitoria = pygame.mixer.music.load(r"asset\sounds\musica_vitoria.mp3")
+
+som_collect_atkspeed = pygame.mixer.Sound(r"asset\sounds\som_atkspeed.mp3")
+som_collect_atkspeed.set_volume(0.5)
+som_collect_dano = pygame.mixer.Sound(r"asset\sounds\som_dano.mp3")
+som_collect_dano.set_volume(0.5)
+som_collect_vida = pygame.mixer.Sound(r"asset\sounds\som_vida.mp3")
+som_collect_vida.set_volume(0.5)
+
+# MÚSICA PRINCIPAL
+pygame.mixer.music.load(r"asset\sounds\musica_fundo.mp3") # carregando ela
+pygame.mixer.music.set_volume(0.3) # volume para ela
+pygame.mixer.music.play(-1) # faz ela tocar infinitamente
+
 
 game_active = True #Condicional de andamento do jogo
 start_time = 0
@@ -62,12 +81,15 @@ class Coletaveis(pygame.sprite.Sprite):
 
     def efeito_coletavel(self,jogador):
             if self.tipo == "coração":
+                som_collect_vida.play()
                 jogador.curar(1) #cura 1 ponto de vida
                 print(f"CURA REALIZADA. Vida atual: {jogador.vida}") # print genérico pra analisar os atributos e suas modaificações
             elif self.tipo == "café":
+                som_collect_atkspeed.play()
                 jogador.aumenta_atk_speed(0.1) # aumenta o atk speed do player
                 print(f"ATAQUE VELOZ. Velocidade de ataque atual: {jogador.weapon.atk_speed}") # print genérico pra analisar os atributos e suas modaificações
             elif self.tipo == "espadinha":
+                som_collect_dano.play()
                 jogador.aumenta_dano(0.1) #aumenta o dano em 10%
                 print(f"DANO AUMENTADO. Dano atual: {jogador.weapon.damage}") # print genérico pra analisar os atributos e suas modaificações
             
@@ -78,21 +100,17 @@ class Coletaveis(pygame.sprite.Sprite):
 
 
 
-class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
+class Jogador(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        # self.image = pygame.Surface((40, 60))
-        # self.image.fill((0, 255, 0))
+        self.image_original = pygame.image.load(
+            r'asset\images\player\player-removebg-preview.png'
+        ).convert_alpha()
 
-        # carrega a imagem
-        self.image = pygame.image.load(r'asset\images\player\player-removebg-preview.png').convert_alpha()
+        self.image_original = pygame.transform.scale(self.image_original, (90, 130))
+        self.image = self.image_original
 
-        # redimensiona 
-        self.image = pygame.transform.scale(self.image, (90, 130))
-
-        # define a posição
         self.rect = self.image.get_rect(midbottom=(400, 320))
-
         self.vida = 10
         self.velocidade = 5
         self.dano = 1 
@@ -100,16 +118,8 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
 
         self.weapon = Weapon(self, 0.5)
         self.hitbox = pygame.Rect(self.rect.x + 5, self.rect.y, 20, 50)
-        self.rect = self.image.get_rect(midbottom=(400, 320))
-        self.vida = 10
-        self.velocidade = 5
-        self.dano = 1 
-        self.gravidade = 0
 
-        self.weapon = Weapon(self, 0.5)
-
-        #A hitbox - equivalente ao alcance da arma do jogador
-        self.hitbox = pygame.Rect(self.rect.x+5, self.rect.y, 20, 50) #Hitbox um pouco menor que o jogador
+        self.facing_right = True  # Direção inicial
 
     def curar (self, qtd=1):
         if self.vida < 10:
@@ -120,18 +130,26 @@ class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
     
     def aumenta_atk_speed(self, porcentagem=0.1):
         self.weapon.atk_speed += self.weapon.atk_speed * porcentagem
+        # limite de atk speed
+        if self.weapon.atk_speed > 1.25:
+            self.weapon.atk_speed = 1.25
 
 
-
-    #Movimentação Kaynan
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.velocidade # movimento em si
+            self.facing_right = False
             self.weapon.flip_horizontal = True # ativa a condição de inversão da arma
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.velocidade # movimento em si
+            self.facing_right = True
             self.weapon.flip_horizontal = False # destiva a condição de inversão da arma
+
+        if self.facing_right:
+            self.image = self.image_original
+        else:
+            self.image = pygame.transform.flip(self.image_original, True, False)
 
 #Definindo a classe inimiga
 class Robo_assassino(pygame.sprite.Sprite):
