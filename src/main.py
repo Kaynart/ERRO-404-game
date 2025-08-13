@@ -195,6 +195,9 @@ def main():
     resultado = None 
     executando = True
 
+    som_derrota = False
+    som_vitoria = False
+
     while executando:
         dt = clock_fps.tick(60) / 1000.0
 
