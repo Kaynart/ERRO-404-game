@@ -148,7 +148,6 @@ def tela_derrota(som_derrota):
         if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
             return "menu"
         if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect
-            # [FIX] usar clique pixel-perfect considerando a escala atual
             if click_pixel_perfeito_restart(evento.pos):
                 return "restart"
     tela.blit(imagem_tela_derrota, (0, 0))
@@ -172,8 +171,7 @@ def tela_vitoria(som_vitoria):
             return "quit"
         if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
             return "menu"
-        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect
-            # [FIX] usar clique pixel-perfect considerando a escala atual
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect            
             if click_pixel_perfeito_restart(evento.pos):
                 return "restart"
     tela.blit(imagem_tela_vitoria, (0, 0))
