@@ -79,11 +79,11 @@ Baixe o branch main do repositório, extraia o arquivo zip, abra a pasta em seu 
 
 ### Coletáveis
 
-`<img src="\asset\images\coletaveis\coração_vermelho.png" alt="Coração" width="30">` Regenera 1 de vida
+<img src="\asset\images\coletaveis\coração_vermelho.png" alt="Coração" width="30"> Regenera 1 de vida
 
-`<img src="\asset\images\coletaveis\café.png" alt="Café" width="30">` Aumenta a velocidade de ataque
+<img src="\asset\images\coletaveis\café.png" alt="Café" width="30"> Aumenta a velocidade de ataque
 
-`<img src="\asset\images\coletaveis\powerup_sabre.png" alt="Espadinha" width="30">` Aumenta força de ataque
+<img src="\asset\images\coletaveis\powerup_sabre.png" alt="Espadinha" width="30"> Aumenta força de ataque
 
 ## ⚠️ Desafios e erros
 
