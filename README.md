@@ -32,7 +32,7 @@ A progressão acontece de forma gradual, com dificuldade crescente e a necessida
 | Felipe Almeida      | Coletáveis, README, design de robôs, contadores   |
 | Brigida Gabrielle   | Personagem principal e interações, design do personagem                                |
 | Guilherme Galindo   | Telas de menu, vitória e derrota                   |
-| Iago Coutinho       | Coletáveis                                         |
+| Iago Coutinho       | Coletáveis: idealização, geração e efeitos no personagem                                         |
 | Kaynan Roberth      | Arma, design de mapa, animações, efeitos sonoros |
 | Maria Clara Pereira | Robôs, apresentação, efeitos sonoros             |
 
