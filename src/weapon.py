@@ -52,7 +52,7 @@ class Weapon(pygame.sprite.Sprite):
         if self.flip_horizontal:
             self.rect.midtop = (self.owner.rect.left - 30, self.owner.rect.centery - self.image.get_height() // 2)
         else:
-            self.rect.midtop = (self.owner.rect.right + 24, self.owner.rect.centery - self.image.get_height() // 2)
+            self.rect.midtop = (self.owner.rect.right + 14, self.owner.rect.centery - self.image.get_height() // 2)
 
         # APLICAÇÃO DOS EFEITOS DA ESPADADA
         if self.attacking:

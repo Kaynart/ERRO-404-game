@@ -81,8 +81,25 @@ class Coletaveis(pygame.sprite.Sprite):
 class Jogador(pygame.sprite.Sprite): #Apenas para testar a interação
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((40, 60))
-        self.image.fill((0, 255, 0))
+        # self.image = pygame.Surface((40, 60))
+        # self.image.fill((0, 255, 0))
+
+        # carrega a imagem
+        self.image = pygame.image.load(r'asset\images\player\player-removebg-preview.png').convert_alpha()
+
+        # redimensiona 
+        self.image = pygame.transform.scale(self.image, (90, 130))
+
+        # define a posição
+        self.rect = self.image.get_rect(midbottom=(400, 320))
+
+        self.vida = 10
+        self.velocidade = 5
+        self.dano = 1 
+        self.gravidade = 0
+
+        self.weapon = Weapon(self, 0.5)
+        self.hitbox = pygame.Rect(self.rect.x + 5, self.rect.y, 20, 50)
         self.rect = self.image.get_rect(midbottom=(400, 320))
         self.vida = 10
         self.velocidade = 5
@@ -463,8 +480,8 @@ while True: #Faz o jogo rodar em loop
             elif item.tipo == "espadinha":
                 contador_powerup += 1
 
-                if jogador.vida <= 0:
-                    game_active = False
+        if jogador.vida <= 0:
+            game_active = False
 
     else: #Tela de restart
         rest_surface = texto_pixel.render('PRESS SPACE TO CONTINUE', False, 'Black') #(terobo_xto, AA, cor)
