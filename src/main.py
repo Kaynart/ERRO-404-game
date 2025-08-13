@@ -226,6 +226,7 @@ def main():
                 estado = "menu"
             elif acao == "restart": 
                 som_derrota = True
+                som_vitoria = True
                 jogo = Jogo()
                 jogo.run()
                 resultado = jogo.result
@@ -242,6 +243,7 @@ def main():
                 estado = "menu"
             elif acao == "restart": 
                 som_vitoria = True # reseta o som de vitória
+                som_derrota = True
                 jogo = Jogo()
                 jogo.run()
                 resultado = jogo.result
