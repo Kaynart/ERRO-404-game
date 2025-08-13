@@ -97,10 +97,6 @@ class Coletaveis(pygame.sprite.Sprite):
             if pygame.time.get_ticks() - self.tempo_nascimento > self.tempo_de_vida:
                 self.kill()
                 
-
-
-
-class Jogador(pygame.sprite.Sprite):
 class Jogador(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
