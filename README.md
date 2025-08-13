@@ -25,12 +25,12 @@ A progressão acontece de forma gradual, com dificuldade crescente e a necessida
 ## 📋 Divisão de tarefas
 Alunos | Contribuições                    
 -------------------|----------------------------------------
-Felipe Almeida     | Coletáveis, README, design de robôs                    
-Brigida Gabrielle  | Movimentação personagem         
+Felipe Almeida     | Coletáveis, README, design de robôs, contadores                    
+Brigida Gabrielle  | Personagem principal        
 Guilherme Galindo  | Telas de menu, vitória e derrota     
 Iago Coutinho      | Coletáveis
-Kaynan Roberth     | Arma, design de mapa, design de arma, design de mapa
-Maria Clara Pereira| Robôs
+Kaynan Roberth     | Arma, design de mapa, design de arma
+Maria Clara Pereira| Robôs, apresentação
 
 ## 🏗️ Arquitetura
 
@@ -87,3 +87,14 @@ O maior desafio foi gerenciar o prazo curto enquanto tentávamos implementar tod
   
 Aprendemos a importância de estudar a base antes de começar a programar, de manter uma organização clara no GitHub e de trabalhar colaborativamente de forma coordenada. 
 ## 	🖼️ Galeria de imagens
+Menu
+
+<img src="\asset\images\tela_inicial\fundo_menu.png" width="800">
+
+Jogo
+
+<img src="\asset\images\tela_inicial\jogo_funcionando.png" width="800">
+
+Tela Final
+
+<img src="\asset\images\tela_inicial\tela_vitoria.png" width="800">
