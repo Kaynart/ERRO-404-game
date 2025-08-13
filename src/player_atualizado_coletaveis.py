@@ -59,7 +59,7 @@ class Jogo:
             tempo_atual = (pygame.time.get_ticks() - start_time)//1000 #Dá o tempo atual em segudos
             minutos = int(tempo_atual // 60) # pega apenas os minutos, já que divide a contagem de segundos pro 60
             segundos = int(tempo_atual % 60) # pega o resto da divisão por 60, que sobra os segundos
-            tempo_surface = texto_font.render(f"{minutos:02}:{segundos:02}",False,'Black')
+            tempo_surface = texto_font.render(f"{minutos:02}:{segundos:02}",False,'White')
             tempo_rect = tempo_surface.get_rect(topleft = (1170,10))
             screen.blit(tempo_surface,tempo_rect)
 
