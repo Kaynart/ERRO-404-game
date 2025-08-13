@@ -3,7 +3,7 @@ import pygame
 pygame.mixer.init()
 
 som_dano_robo = pygame.mixer.Sound(r"asset\sounds\som_dano_robo.mp3")
-som_dano_robo.set_volume(0.05)
+som_dano_robo.set_volume(0.1)
 som_espada = pygame.mixer.Sound(r"asset\sounds\som_espada.mp3")
 som_espada.set_volume(0.2)
 
