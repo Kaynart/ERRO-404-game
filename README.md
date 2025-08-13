@@ -77,8 +77,13 @@ Baixe o branch main do repositório, extraia o arquivo zip, abra a pasta em seu 
 ## ⚠️ Desafios e erros
 - Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
 
+O maior erro foi a falta de experiência prévia com POO e Pygame, o que gerou problemas de formatação, sintaxe e estrutura do código nos primeiros dias. Lidamos com isso dedicando tempo extra para estudar os conceitos básicos e revisando cuidadosamente cada trecho de código antes de integrá-lo ao projeto.
+
 - Qual foi o maior desafio enfrentado durante o projeto? Como vocês lidaram com ele?
 
-- Quais as lições aprendidas durante o projeto?
+O maior desafio foi gerenciar o prazo curto enquanto tentávamos implementar todas as ideias, além de lidar com a integração de códigos de diferentes membros do grupo. Para contornar isso, foi necessária bastante comunicação, discutimos a melhor forma de mesclar códigos e priorizamos as funcionalidades essenciais.
 
+- Quais as lições aprendidas durante o projeto?
+  
+Aprendemos a importância de estudar a base antes de começar a programar, de manter uma organização clara no GitHub e de trabalhar colaborativamente de forma coordenada. 
 ## 	🖼️ Galeria de imagens
