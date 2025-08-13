@@ -53,9 +53,32 @@ Maria Clara Pereira| Robôs
 - Tuplas – Utilizadas em coordenadas e tamanhos fixos, garantindo dados imutáveis para posições e dimensões.
 - POO (Programação Orientada a Objetos) – Aplicada na criação de classes como Coletaveis, Jogador e Robô, encapsulando atributos e métodos relacionados, além do uso de herança.
 
+## 🕹️ Como jogar
+### Executando
+Para executar o código, é necessário ter o python e pygame instalados.  
+
+Baixe o branch main do repositório, extraia o arquivo zip, abra a pasta em seu editor e execute o main.py 
+### Comandos
+→ **Move para direita**
+
+← **Move para esquerda**
+
+↑ **Pula**
+
+*Espaço* **Ataca**
+
+### Coletáveis
+<img src="\asset\images\coletaveis\coração_vermelho.png" alt="Coração" width="30"> Regenera 1 de vida
+
+<img src="\asset\images\coletaveis\café.png" alt="Café" width="30"> Aumenta a velocidade de ataque
+
+<img src="\asset\images\coletaveis\powerup_sabre.png" alt="Espadinha" width="30"> Aumenta força de atauqe
+
 ## ⚠️ Desafios e erros
 - Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
+
 - Qual foi o maior desafio enfrentado durante o projeto? Como vocês lidaram com ele?
+
 - Quais as lições aprendidas durante o projeto?
 
 ## 	🖼️ Galeria de imagens
