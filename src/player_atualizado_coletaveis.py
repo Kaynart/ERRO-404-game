@@ -230,6 +230,18 @@ class Jogo:
                 self.flip_definido_no_empurrao = False # para o empurrão
 
 
+            # Barra de vida do robô
+            def barra_hp_robo(self):
+                self.vida_x_green = self.rect.x + 25 # define a posição em comprimento da barra de vida para a mesma do inicio do robo
+                self.vida_y = self.rect.bottom + 10 # define a posição em altura da barra de vida para 20 embaixo do fundo do robo
+                self.porcentagem_hp = self.vida_robo / 3 # pega a porcentagem de vida do robô
+                pygame.draw.rect(screen, (0,255,0), (self.vida_x_green, self.vida_y, 79, 5)) # desenha um retângulo verde pra vida do robo
+                
+                if self.vida_robo < 3: # se ele perdeu vida, coloca tambem o retangulo vermelho equivalente à vida perdida
+                    self.vida_x_red = self.vida_x_green + (80 * self.porcentagem_hp) # a parte vermelha começa após a vida restante dele
+                    pygame.draw.rect(screen, (255,0,0), (self.vida_x_red, self.vida_y, 80 - (80 * self.porcentagem_hp), 5)) # desenha um retângulo verde pra vida do robo
+
+
             #Definindo função para caso haja ataque do robô
             def checando_ataque_robo(self,jogador): #Definir anteriormente esse último ataque #Substituir pelas informações do jogador corretas
                 agora = pygame.time.get_ticks()
@@ -329,6 +341,9 @@ class Jogo:
 
                 # Atualiza a animação de dano sempre
                 self.atualizar_animacao_dano()
+
+                # Atualiza a vida do robô
+                self.barra_hp_robo()
 
         #Função de spawn do robô
         def spawn_robo(grupo_robos_assassinos, todas_as_sprites):
