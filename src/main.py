@@ -26,6 +26,12 @@ botao_exit_imagem  = pygame.image.load("asset/images/tela_inicial/botao_exit.png
 imagem_tela_derrota = pygame.transform.smoothscale(pygame.image.load("asset/images/tela_inicial/tela_derrota.png").convert_alpha(), (largura_tela, altura_tela))
 imagem_tela_vitoria = pygame.transform.smoothscale(pygame.image.load("asset/images/tela_inicial/tela_vitoria.png").convert_alpha(), (largura_tela, altura_tela))
 
+# sons derrota e vitória
+musica_derrota = pygame.mixer.Sound(r"asset\sounds\musica_derrota.mp3")
+musica_derrota.set_volume(0.7)
+musica_vitoria = pygame.mixer.Sound(r"asset\sounds\musica_vitoria.mp3")
+musica_vitoria.set_volume(0.7)
+
 # botão de restart para vitoria/derrota
 botao_restart_imagem = pygame.image.load("asset/images/tela_inicial/botao_restart.png").convert_alpha()
 x = int(largura_tela * 0.80)
@@ -130,6 +136,7 @@ def desenhar_botao_pulsante(surface, imagem, retangulo, escala_base=1.06):
 
 # aqui vem a tela de derrota e tela de vitoria apertando esq para voltar para o menu
 def tela_derrota():
+    musica_derrota.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             return "quit"
@@ -153,6 +160,7 @@ def tela_derrota():
     return None
 
 def tela_vitoria():
+    musica_vitoria.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             return "quit"

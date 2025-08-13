@@ -34,15 +34,18 @@ class Jogo:
 
         # Carregando músicas e efeitos sonoros
         # EFEITOS SONOROS
-        musica_derrota = pygame.mixer.music.load(r"asset\sounds\musica_derrota.mp3")
-        musica_vitoria = pygame.mixer.music.load(r"asset\sounds\musica_vitoria.mp3")
-
+        # coletáveis
         som_collect_atkspeed = pygame.mixer.Sound(r"asset\sounds\som_atkspeed.mp3")
         som_collect_atkspeed.set_volume(0.5)
-        som_collect_dano = pygame.mixer.Sound(r"asset\sounds\som_dano.mp3")
+        som_collect_dano = pygame.mixer.Sound(r"asset\sounds\som_buffdano.mp3")
         som_collect_dano.set_volume(0.5)
         som_collect_vida = pygame.mixer.Sound(r"asset\sounds\som_vida.mp3")
         som_collect_vida.set_volume(0.5)
+        # dano do player
+        som_dano_player = pygame.mixer.Sound(r"asset\sounds\som_dano_jogador.mp3")
+        som_dano_player.set_volume(0.5)
+        
+
 
         # MÚSICA PRINCIPAL
         pygame.mixer.music.load(r"asset\sounds\musica_fundo.mp3") # carregando ela
@@ -231,6 +234,7 @@ class Jogo:
                 agora = pygame.time.get_ticks()
                 if ((agora - self.ultimo_ataque_robo) >= self.tempo_cooldown_robo) and self.rect.colliderect(jogador.rect) and not self.primeiro_contato: #Se já deu o intervalo de ataque e colidiram pela primeira vez
                     jogador.levando_dano = True
+                    som_dano_player.play()
                     jogador.vida = jogador.vida - self.dano_robo #Dando dano
                     self.ultimo_ataque_robo = agora
                     self.primeiro_contato = True

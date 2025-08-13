@@ -1,5 +1,12 @@
 import pygame
 
+pygame.mixer.init()
+
+som_dano_robo = pygame.mixer.Sound(r"asset\sounds\som_dano_robo.mp3")
+som_dano_robo.set_volume(0.05)
+som_espada = pygame.mixer.Sound(r"asset\sounds\som_espada.mp3")
+som_espada.set_volume(0.2)
+
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, owner, atk_speed=1, damage=1):
         super().__init__()
@@ -56,8 +63,10 @@ class Weapon(pygame.sprite.Sprite):
 
         # APLICAÇÃO DOS EFEITOS DA ESPADADA
         if self.attacking:
+            som_espada.play()
             for alvo in self.owner.target_group:
                 if self.rect.colliderect(alvo.rect) and not alvo.dano_sofrido: # se houver colisão e o robõ ainda não tiver sofrido nenhum dano desse ataque
+                    som_dano_robo.play()
                     alvo.image = alvo.imagedano1
                     alvo.levar_dano(self.owner)
                     alvo.empurrar() # ativa o empurrão
