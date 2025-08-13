@@ -30,7 +30,7 @@ A progressão acontece de forma gradual, com dificuldade crescente e a necessida
 | Alunos              | Contribuições                                     |
 | ------------------- | --------------------------------------------------- |
 | Felipe Almeida      | Coletáveis, README, design de robôs, contadores   |
-| Brigida Gabrielle   | Personagem principal                                |
+| Brigida Gabrielle   | Personagem principal e interações, design do personagem                                |
 | Guilherme Galindo   | Telas de menu, vitória e derrota                   |
 | Iago Coutinho       | Coletáveis                                         |
 | Kaynan Roberth      | Arma, design de mapa, animações, efeitos sonoros |
