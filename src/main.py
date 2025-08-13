@@ -1,4 +1,4 @@
-# jogo principal.py
+# main(jogo_principal)
 import pygame
 import sys
 import random
@@ -147,7 +147,7 @@ def tela_derrota(som_derrota):
             return "quit"
         if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
             return "menu"
-        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect, para garantir que nao haja erros no clique do botao
             if click_pixel_perfeito_restart(evento.pos):
                 return "restart"
     tela.blit(imagem_tela_derrota, (0, 0))
@@ -171,12 +171,13 @@ def tela_vitoria(som_vitoria):
             return "quit"
         if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
             return "menu"
-        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect            
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:  # clique continua pixel-perfect, mesma coisa que anteriormente            
             if click_pixel_perfeito_restart(evento.pos):
                 return "restart"
     tela.blit(imagem_tela_vitoria, (0, 0))
 
     # animação do botão restart — sem mudar posição e sem flicker
+    # antes tinha um problema de flipar o botao, por isso isso aqui.
     tempo = pygame.time.get_ticks() / 1000.0
     pulso = 1.0 + 0.03 * math.sin(tempo * 6.0)
     if hover_restart():
