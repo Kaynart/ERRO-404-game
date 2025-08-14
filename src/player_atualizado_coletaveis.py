@@ -432,7 +432,7 @@ class Jogo:
                 if event.type == pygame.KEYDOWN and game_active: # Ativação de teclas
                     # Movimentação 
                     if event.key == pygame.K_UP and jogador.rect.bottom == 660:  # ajustei a nova resolucao
-                        jogador.gravidade = -15
+                        jogador.gravidade = -17
 
                     # Ataque com a espada
                     if event.type == pygame.KEYDOWN:
